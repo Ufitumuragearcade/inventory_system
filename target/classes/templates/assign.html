@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Asset - IMS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #F5F5F5;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .navbar-brand {
+            color: #1E3A5F;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .navbar-menu a {
+            color: #4682B4;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .navbar-menu a:hover {
+            background: #87CEEB;
+            color: #FFFFFF;
+        }
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .navbar-user span {
+            color: #1E3A5F;
+            font-weight: 600;
+        }
+        .btn {
+            background: #00BFFF;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #4169E1;
+        }
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 14px;
+            background: #F44336;
+        }
+        .btn-sm:hover {
+            background: #d32f2f;
+        }
+        .btn-warning {
+            background: #FF9800;
+        }
+        .btn-warning:hover {
+            background: #f57c00;
+        }
+        .main-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .form-container {
+            background: #FFFFFF;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-container h2 {
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #1E3A5F;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #87CEEB;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00BFFF;
+        }
+        .form-group small {
+            color: #666;
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .alert-error {
+            background: #fce4ec;
+            color: #c62828;
+            border-left: 4px solid #F44336;
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/dashboard" class="navbar-brand">&#x1F4E6; IMS</a>
+        <div class="navbar-menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/assets">Manage Assets</a>
+            <a href="/assign">Assign Asset</a>
+            <a href="/return">Return Asset</a>
+            <a href="/report">Reports</a>
+        </div>
+        <div class="navbar-user">
+            <span th:text="${user.name}">User</span>
+            <a href="/logout" class="btn btn-sm">Logout</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h2>&#x1F4CB; Assign Asset to User</h2>
+            
+            <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+            
+            <form th:action="@{/assign}" method="post" style="margin-top: 20px;">
+                <div class="form-group">
+                    <label>Select User *</label>
+                    <select name="userId" required>
+                        <option value="">Choose a user...</option>
+                        <option th:each="u : ${users}" 
+                                th:value="${u.id}" 
+                                th:text="${u.name + ' (' + u.department + ')'}"></option>
+                    </select>
+                    <small>Select the user who will receive this asset</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select Asset *</label>
+                    <select name="assetId" required>
+                        <option value="">Choose an available asset...</option>
+                        <option th:each="asset : ${availableAssets}" 
+                                th:value="${asset.id}" 
+                                th:text="${asset.name + ' - ' + asset.type + ' (' + asset.serialNumber + ')'}"></option>
+                    </select>
+                    <small>Only available assets are shown in this list</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Issue Note / Purpose</label>
+                    <textarea name="message" rows="4" placeholder="Enter reason for assignment (optional)..."></textarea>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-warning">&#x2713; Assign Asset</button>
+                    <a href="/dashboard" class="btn" style="background: #999;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

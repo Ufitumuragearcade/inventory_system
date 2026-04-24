@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2>Assets</h2>
+
+<a href="/assets/new">Add Asset</a>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Tag</th>
+    <th>Category</th>
+</tr>
+
+<tr th:each="a : ${assets}">
+    <td th:text="${a.id}"></td>
+    <td th:text="${a.assetTag}"></td>
+    <td th:text="${a.category}"></td>
+</tr>
+
+</table>
+</body>
+</html>

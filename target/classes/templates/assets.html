@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Assets - Inventory Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #F5F5F5;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .navbar-brand {
+            color: #1E3A5F;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .navbar-menu a {
+            color: #4682B4;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .navbar-menu a:hover {
+            background: #87CEEB;
+            color: #FFFFFF;
+        }
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .navbar-user span {
+            color: #1E3A5F;
+            font-weight: 600;
+        }
+        .btn {
+            background: #00BFFF;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #4169E1;
+        }
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 14px;
+        }
+        .btn-danger {
+            background: #F44336;
+        }
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+        .btn-warning {
+            background: #FF9800;
+        }
+        .btn-warning:hover {
+            background: #f57c00;
+        }
+        .btn-success {
+            background: #4CAF50;
+        }
+        .btn-success:hover {
+            background: #45a049;
+        }
+        .main-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header-row h2 {
+            color: #1E3A5F;
+        }
+        .alert {
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #4CAF50;
+        }
+        .alert-error {
+            background: #fce4ec;
+            color: #c62828;
+            border-left: 4px solid #F44336;
+        }
+        .table-container {
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background: #87CEEB;
+            color: #FFFFFF;
+        }
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+        tbody tr:hover {
+            background: #F5F5F5;
+        }
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-available {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+        .status-assigned {
+            background: #fff3e0;
+            color: #FF9800;
+        }
+        .status-returned {
+            background: #e3f2fd;
+            color: #4169E1;
+        }
+        .status-maintenance {
+            background: #fce4ec;
+            color: #F44336;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/dashboard" class="navbar-brand">&#x1F4E6; IMS</a>
+        <div class="navbar-menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/assets">Manage Assets</a>
+            <a href="/assign">Assign Asset</a>
+            <a href="/return">Return Asset</a>
+            <a href="/report">Reports</a>
+        </div>
+        <div class="navbar-user">
+            <span th:text="${user.name}">User</span>
+            <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="header-row">
+            <h2>Asset Management</h2>
+            <a href="/assets/add" class="btn btn-success">+ Add New Asset</a>
+        </div>
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Serial Number</th>
+                        <th>Condition</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="asset : ${assets}">
+                        <td th:text="${asset.id}">1</td>
+                        <td th:text="${asset.name}">Asset Name</td>
+                        <td th:text="${asset.type}">Type</td>
+                        <td th:text="${asset.serialNumber}">SN-001</td>
+                        <td th:text="${asset.conditionStatus}">Good</td>
+                        <td>
+                            <span class="status-badge" 
+                                  th:classappend="${asset.status == 'available' ? 'status-available' : (asset.status == 'assigned' ? 'status-assigned' : (asset.status == 'returned' ? 'status-returned' : 'status-maintenance'))}"
+                                  th:text="${asset.status}">available</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a th:href="@{/assets/edit/{id}(id=${asset.id})}" 
+                                   class="btn btn-sm btn-warning">Edit</a>
+                                <a th:href="@{/assets/delete/{id}(id=${asset.id})}" 
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this asset?')">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(assets)}">
+                        <td colspan="7" style="text-align: center; padding: 30px; color: #666;">
+                            No assets found. <a href="/assets/add">Add your first asset</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2>Add Asset</h2>
+
+<form th:action="@{/assets}" method="post" th:object="${asset}">
+    <input th:field="*{assetTag}" placeholder="Tag"/>
+    <input th:field="*{category}" placeholder="Category"/>
+    <input th:field="*{brand}" placeholder="Brand"/>
+    <input th:field="*{model}" placeholder="Model"/>
+    <input th:field="*{serialNumber}" placeholder="Serial Number"/>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>
