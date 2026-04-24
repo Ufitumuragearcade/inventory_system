@@ -1,9 +1,6 @@
 package com.ims.ui;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,9 +42,8 @@ public class ReportForm {
         model.addAttribute("departments", inventoryService.getAllUsers().stream()
                 .map(user -> user.getDepartment())
                 .filter(Helpers::hasText)
-                .collect(LinkedHashSet::new, LinkedHashSet::add, LinkedHashSet::addAll)
-                .stream()
-                .sorted(Comparator.naturalOrder())
+                .distinct()
+                .sorted()
                 .toList());
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
