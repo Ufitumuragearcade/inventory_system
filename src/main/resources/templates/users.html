@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users | Inventory System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="page-shell">
+        <div class="topbar">
+            <div>
+                <h2>Manage Users</h2>
+                <p class="muted">Register staff members and their departments before assigning assets.</p>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                <a class="nav-link" th:href="@{/assets}">Assets</a>
+                <a class="nav-link" th:href="@{/assign}">Assign</a>
+                <a class="nav-link" th:href="@{/return}">Return</a>
+                <a class="nav-link" th:href="@{/reports}">Reports</a>
+                <a class="nav-link active" th:href="@{/users}">Users</a>
+                <a class="nav-link logout-link" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+
+        <div th:if="${successMessage}" class="message message-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="message message-error" th:text="${errorMessage}"></div>
+
+        <div class="content-grid">
+            <div class="panel">
+                <h3 class="section-title">Add User</h3>
+                <form th:action="@{/users/save}" th:object="${userForm}" method="post" class="form-grid">
+                    <div>
+                        <label class="label" for="name">Full Name</label>
+                        <input class="field" id="name" th:field="*{name}" type="text" placeholder="Employee name" required>
+                    </div>
+
+                    <div>
+                        <label class="label" for="department">Department</label>
+                        <input class="field" id="department" th:field="*{department}" type="text" placeholder="Finance, IT, Admin" required>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-primary" type="submit">Save User</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-card">
+                <h3 class="section-title">Registered Users</h3>
+                <div th:if="${#lists.isEmpty(users)}" class="empty-state">
+                    No users found. Add the first user using the form on the left.
+                </div>
+                <div th:unless="${#lists.isEmpty(users)}" class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.department}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

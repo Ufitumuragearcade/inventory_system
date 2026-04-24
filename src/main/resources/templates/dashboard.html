@@ -1,200 +1,110 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Inventory Management System</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #F5F5F5;
-            min-height: 100vh;
-        }
-        .navbar {
-            background: #FFFFFF;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .navbar-brand {
-            color: #1E3A5F;
-            font-size: 24px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-        .navbar-menu {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .navbar-menu a {
-            color: #4682B4;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .navbar-menu a:hover {
-            background: #87CEEB;
-            color: #FFFFFF;
-        }
-        .navbar-user {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .navbar-user span {
-            color: #1E3A5F;
-            font-weight: 600;
-        }
-        .btn {
-            background: #00BFFF;
-            color: #FFFFFF;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn:hover {
-            background: #4169E1;
-        }
-        .btn-sm {
-            padding: 5px 12px;
-            font-size: 14px;
-            background: #F44336;
-        }
-        .btn-sm:hover {
-            background: #d32f2f;
-        }
-        .btn-success {
-            background: #4CAF50;
-        }
-        .btn-success:hover {
-            background: #45a049;
-        }
-        .btn-warning {
-            background: #FF9800;
-        }
-        .btn-warning:hover {
-            background: #f57c00;
-        }
-        .main-content {
-            padding: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .page-header {
-            margin-bottom: 30px;
-        }
-        .page-header h2 {
-            color: #1E3A5F;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .page-header p {
-            color: #4682B4;
-        }
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        .dashboard-card {
-            background: #FFFFFF;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            border-left: 4px solid #87CEEB;
-            transition: transform 0.3s;
-        }
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-        }
-        .dashboard-card h3 {
-            color: #4682B4;
-            font-size: 16px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .dashboard-card .value {
-            color: #1E3A5F;
-            font-size: 36px;
-            font-weight: 700;
-        }
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .action-grid a {
-            text-align: center;
-        }
-    </style>
+    <title>Dashboard | Inventory System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="/dashboard" class="navbar-brand">&#x1F4E6; IMS</a>
-        <div class="navbar-menu">
-            <a href="/dashboard">Dashboard</a>
-            <a href="/assets">Manage Assets</a>
-            <a href="/assign">Assign Asset</a>
-            <a href="/return">Return Asset</a>
-            <a href="/report">Reports</a>
-        </div>
-        <div class="navbar-user">
-            <span th:text="${user.name}">User</span>
-            <a href="/logout" class="btn btn-sm">Logout</a>
-        </div>
-    </nav>
-
-    <div class="main-content">
-        <div class="page-header">
-            <h2>Dashboard</h2>
-            <p>Welcome back, <span th:text="${user.name}">User</span></p>
-        </div>
-
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <h3>Total Assets</h3>
-                <div class="value" th:text="${totalAssets}">0</div>
+    <div class="page-shell">
+        <div class="topbar">
+            <div>
+                <h2>Inventory Dashboard</h2>
+                <p class="muted">Signed in as <strong th:text="${displayName}"></strong></p>
             </div>
-            <div class="dashboard-card">
-                <h3>Available Assets</h3>
-                <div class="value" th:text="${availableAssets}">0</div>
-            </div>
-            <div class="dashboard-card">
-                <h3>Active Assignments</h3>
-                <div class="value" th:text="${activeTransactions}">0</div>
-            </div>
-            <div class="dashboard-card">
-                <h3>Total Users</h3>
-                <div class="value" th:text="${totalUsers}">0</div>
+            <div class="nav-links">
+                <a class="nav-link active" th:href="@{/dashboard}">Dashboard</a>
+                <a class="nav-link" th:href="@{/assets}">Assets</a>
+                <a class="nav-link" th:href="@{/assign}">Assign</a>
+                <a class="nav-link" th:href="@{/return}">Return</a>
+                <a class="nav-link" th:href="@{/reports}">Reports</a>
+                <a class="nav-link" th:href="@{/users}">Users</a>
+                <a class="nav-link logout-link" th:href="@{/logout}">Logout</a>
             </div>
         </div>
 
-        <div class="action-grid">
-            <a href="/assets/add" class="btn btn-success">+ Add New Asset</a>
-            <a href="/assign" class="btn btn-warning">&#x1F4CB; Assign Asset</a>
-            <a href="/return" class="btn btn-success">&#x21A9; Return Asset</a>
-            <a href="/report" class="btn">&#x1F4CA; View Reports</a>
+        <div class="hero">
+            <div class="hero-card">
+                <span class="brand-chip">Control Center</span>
+                <h1 class="hero-title">Track every asset from registration to return.</h1>
+                <p class="page-copy">This Spring Boot inventory system keeps asset records, assignment history, return tracking, report filtering, and user management in one place.</p>
+                <div class="hero-strip">
+                    <span class="hero-pill">MySQL on XAMPP</span>
+                    <span class="hero-pill">DAO + Service Layer</span>
+                    <span class="hero-pill">Blue sky theme</span>
+                </div>
+            </div>
+
+            <div class="panel info-card">
+                <h3 class="section-title">Quick Access</h3>
+                <div class="actions" style="margin-top: 18px;">
+                    <a class="btn btn-primary" th:href="@{/assets}">Add Asset</a>
+                    <a class="btn btn-secondary" th:href="@{/assign}">Assign Asset</a>
+                    <a class="btn btn-secondary" th:href="@{/return}">Return Asset</a>
+                    <a class="btn btn-secondary" th:href="@{/reports}">Open Reports</a>
+                    <a class="btn btn-secondary" th:href="@{/users}">Manage Users</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="muted">Total Assets</div>
+                <div class="stat-number" th:text="${totalAssets}"></div>
+            </div>
+            <div class="card">
+                <div class="muted">Available</div>
+                <div class="stat-number" th:text="${availableAssets}"></div>
+            </div>
+            <div class="card">
+                <div class="muted">Assigned</div>
+                <div class="stat-number" th:text="${assignedAssets}"></div>
+            </div>
+            <div class="card">
+                <div class="muted">Returned</div>
+                <div class="stat-number" th:text="${returnedAssets}"></div>
+            </div>
+            <div class="card">
+                <div class="muted">Users</div>
+                <div class="stat-number" th:text="${totalUsers}"></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3 class="section-title">Recent Transactions</h3>
+            <p class="page-copy">Latest asset issue and return activity.</p>
+
+            <div th:if="${#lists.isEmpty(recentTransactions)}" class="empty-state">
+                No transactions yet. Start by creating users and assets, then assign an asset.
+            </div>
+
+            <div th:unless="${#lists.isEmpty(recentTransactions)}" class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>User</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Issued</th>
+                            <th>Returned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tx : ${recentTransactions}">
+                            <td th:text="${tx.assetName}"></td>
+                            <td th:text="${tx.userName}"></td>
+                            <td th:text="${tx.department}"></td>
+                            <td>
+                                <span class="badge" th:classappend="' status-' + ${tx.status}" th:text="${tx.status}"></span>
+                            </td>
+                            <td th:text="${tx.issueDate != null ? #temporals.format(tx.issueDate, 'yyyy-MM-dd HH:mm') : ''}"></td>
+                            <td th:text="${tx.returnDate != null ? #temporals.format(tx.returnDate, 'yyyy-MM-dd HH:mm') : 'Pending'}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>

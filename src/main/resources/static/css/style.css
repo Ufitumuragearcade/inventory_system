@@ -1,0 +1,377 @@
+:root {
+    --sky-50: #eef8ff;
+    --sky-100: #dff1ff;
+    --sky-200: #cde9ff;
+    --sky-400: #56a9ff;
+    --sky-500: #2d8cff;
+    --sky-700: #1d5e99;
+    --ink: #17324d;
+    --muted: #6a8199;
+    --white: #ffffff;
+    --line: #d6e8f7;
+    --success: #1f8f5f;
+    --danger: #d1495b;
+    --warning: #db8b00;
+    --shadow: 0 12px 26px rgba(26, 88, 140, 0.12);
+    --radius: 18px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--sky-50);
+    color: var(--ink);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.page-shell {
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.login-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--sky-100);
+}
+
+.login-card,
+.panel,
+.card,
+.table-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.login-card {
+    width: min(100%, 430px);
+    padding: 32px;
+}
+
+.brand-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--sky-100);
+    color: var(--sky-700);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-title {
+    margin: 14px 0 8px;
+    font-size: 30px;
+}
+
+.page-copy,
+.muted {
+    color: var(--muted);
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 18px 22px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.topbar h1,
+.topbar h2,
+.section-title {
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-link {
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--sky-50);
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--sky-100);
+    border-color: var(--sky-200);
+    color: var(--sky-700);
+}
+
+.logout-link {
+    background: var(--white);
+    border: 1px solid var(--line);
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.hero-card,
+.info-card {
+    padding: 24px;
+}
+
+.hero-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    margin: 0 0 10px;
+    font-size: 34px;
+    line-height: 1.1;
+}
+
+.hero-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.hero-pill {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: var(--sky-50);
+    border: 1px solid var(--sky-200);
+    font-weight: 600;
+}
+
+.stats-grid,
+.action-grid,
+.content-grid,
+.two-column {
+    display: grid;
+    gap: 20px;
+}
+
+.stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    margin-bottom: 24px;
+}
+
+.action-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    margin-bottom: 24px;
+}
+
+.content-grid,
+.two-column {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+}
+
+.card,
+.panel,
+.table-card {
+    padding: 22px;
+}
+
+.stat-number {
+    margin-top: 12px;
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--sky-700);
+}
+
+.label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.field,
+.select,
+.textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fbfeff;
+    color: var(--ink);
+    outline: none;
+}
+
+.field:focus,
+.select:focus,
+.textarea:focus {
+    border-color: var(--sky-400);
+}
+
+.textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.form-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background: var(--sky-500);
+    color: var(--white);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--sky-700);
+    border-color: var(--line);
+}
+
+.btn-danger {
+    background: #fff4f4;
+    color: var(--danger);
+    border-color: #ffd1d7;
+}
+
+.message {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-weight: 600;
+}
+
+.message-success {
+    background: #edf9f3;
+    border: 1px solid #caead7;
+    color: var(--success);
+}
+
+.message-error {
+    background: #fff3f5;
+    border: 1px solid #ffd3da;
+    color: var(--danger);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    color: var(--muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.badge {
+    display: inline-flex;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.status-available {
+    background: #edf9f3;
+    color: var(--success);
+}
+
+.status-assigned {
+    background: #edf4ff;
+    color: var(--sky-700);
+}
+
+.status-returned {
+    background: #fff7e8;
+    color: var(--warning);
+}
+
+.status-maintenance {
+    background: #fff3f5;
+    color: var(--danger);
+}
+
+.empty-state {
+    padding: 16px;
+    border-radius: 14px;
+    background: var(--sky-50);
+    color: var(--muted);
+}
+
+.small-note {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+@media (max-width: 960px) {
+    .hero,
+    .content-grid,
+    .two-column,
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

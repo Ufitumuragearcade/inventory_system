@@ -1,277 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports - IMS</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #F5F5F5;
-            min-height: 100vh;
-        }
-        .navbar {
-            background: #FFFFFF;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .navbar-brand {
-            color: #1E3A5F;
-            font-size: 24px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-        .navbar-menu {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .navbar-menu a {
-            color: #4682B4;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .navbar-menu a:hover {
-            background: #87CEEB;
-            color: #FFFFFF;
-        }
-        .navbar-user {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .navbar-user span {
-            color: #1E3A5F;
-            font-weight: 600;
-        }
-        .btn {
-            background: #00BFFF;
-            color: #FFFFFF;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn:hover {
-            background: #4169E1;
-        }
-        .btn-sm {
-            padding: 5px 12px;
-            font-size: 14px;
-            background: #F44336;
-        }
-        .btn-sm:hover {
-            background: #d32f2f;
-        }
-        .btn-clear {
-            background: #666;
-        }
-        .btn-clear:hover {
-            background: #444;
-        }
-        .main-content {
-            padding: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .page-header {
-            margin-bottom: 30px;
-        }
-        .page-header h2 {
-            color: #1E3A5F;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .page-header p {
-            color: #4682B4;
-        }
-        .filter-section {
-            background: #FFFFFF;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-        }
-        .filter-form {
-            display: flex;
-            gap: 15px;
-            align-items: flex-end;
-            flex-wrap: wrap;
-        }
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        .filter-group label {
-            display: block;
-            color: #1E3A5F;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .filter-group input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #87CEEB;
-            border-radius: 5px;
-            font-size: 14px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .filter-group input:focus {
-            outline: none;
-            border-color: #00BFFF;
-        }
-        .table-container {
-            background: #FFFFFF;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        thead {
-            background: #87CEEB;
-            color: #FFFFFF;
-        }
-        th {
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 0.5px;
-        }
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-            font-size: 14px;
-        }
-        tbody tr:hover {
-            background: #F5F5F5;
-        }
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .status-issued {
-            background: #fce4ec;
-            color: #F44336;
-        }
-        .status-returned {
-            background: #e8f5e9;
-            color: #4CAF50;
-        }
-        .status-overdue {
-            background: #fff3e0;
-            color: #FF9800;
-        }
-    </style>
+    <title>Reports | Inventory System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="/dashboard" class="navbar-brand">&#x1F4E6; IMS</a>
-        <div class="navbar-menu">
-            <a href="/dashboard">Dashboard</a>
-            <a href="/assets">Manage Assets</a>
-            <a href="/assign">Assign Asset</a>
-            <a href="/return">Return Asset</a>
-            <a href="/report">Reports</a>
-        </div>
-        <div class="navbar-user">
-            <span th:text="${user.name}">User</span>
-            <a href="/logout" class="btn btn-sm">Logout</a>
-        </div>
-    </nav>
-
-    <div class="main-content">
-        <div class="page-header">
-            <h2>&#x1F4CA; Transaction Reports</h2>
-            <p>View and filter all asset transactions</p>
+    <div class="page-shell">
+        <div class="topbar">
+            <div>
+                <h2>Reports</h2>
+                <p class="muted">Search and filter inventory transactions by time, type, department, and status.</p>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                <a class="nav-link" th:href="@{/assets}">Assets</a>
+                <a class="nav-link" th:href="@{/assign}">Assign</a>
+                <a class="nav-link" th:href="@{/return}">Return</a>
+                <a class="nav-link active" th:href="@{/reports}">Reports</a>
+                <a class="nav-link" th:href="@{/users}">Users</a>
+                <a class="nav-link logout-link" th:href="@{/logout}">Logout</a>
+            </div>
         </div>
 
-        <div class="filter-section">
-            <form th:action="@{/report}" method="get" class="filter-form">
-                <div class="filter-group">
-                    <label>Department</label>
-                    <input type="text" name="department" placeholder="e.g., IT, HR, Finance">
+        <div class="panel" style="margin-bottom: 24px;">
+            <h3 class="section-title">Search Filters</h3>
+            <form th:action="@{/reports}" method="get" class="form-grid" style="margin-top: 18px;">
+                <div class="form-row">
+                    <div>
+                        <label class="label" for="startDate">Start Date</label>
+                        <input class="field" id="startDate" name="startDate" type="date" th:value="${startDate}">
+                    </div>
+                    <div>
+                        <label class="label" for="endDate">End Date</label>
+                        <input class="field" id="endDate" name="endDate" type="date" th:value="${endDate}">
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Start Date</label>
-                    <input type="datetime-local" name="startDate">
+
+                <div class="form-row">
+                    <div>
+                        <label class="label" for="assetType">Asset Type</label>
+                        <select class="select" id="assetType" name="assetType">
+                            <option value="">All asset types</option>
+                            <option th:each="type : ${assetTypes}" th:value="${type}" th:text="${type}"
+                                    th:selected="${type == assetType}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label" for="department">Department</label>
+                        <select class="select" id="department" name="department">
+                            <option value="">All departments</option>
+                            <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept}"
+                                    th:selected="${dept == department}"></option>
+                        </select>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>End Date</label>
-                    <input type="datetime-local" name="endDate">
+
+                <div>
+                    <label class="label" for="status">Status</label>
+                    <select class="select" id="status" name="status">
+                        <option value="">All statuses</option>
+                        <option value="assigned" th:selected="${status == 'assigned'}">assigned</option>
+                        <option value="returned" th:selected="${status == 'returned'}">returned</option>
+                    </select>
                 </div>
-                <div class="filter-group">
-                    <button type="submit" class="btn">&#x1F50D; Apply Filters</button>
-                    <a href="/report" class="btn btn-clear">&#x21BA; Clear</a>
+
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">Apply Filters</button>
+                    <a class="btn btn-secondary" th:href="@{/reports}">Reset</a>
                 </div>
             </form>
         </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Asset</th>
-                        <th>Type</th>
-                        <th>User</th>
-                        <th>Department</th>
-                        <th>Issue Date</th>
-                        <th>Return Date</th>
-                        <th>Status</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="t : ${transactions}">
-                        <td th:text="${t.id}">1</td>
-                        <td th:text="${t.asset.name}">Asset</td>
-                        <td th:text="${t.asset.type}">Type</td>
-                        <td th:text="${t.user.name}">User</td>
-                        <td th:text="${t.user.department}">Dept</td>
-                        <td th:text="${#temporals.format(t.issueDate, 'dd-MM-yyyy HH:mm')}">Issue</td>
-                        <td th:text="${t.returnDate != null ? #temporals.format(t.returnDate, 'dd-MM-yyyy HH:mm') : 'Not returned'}">Return</td>
-                        <td>
-                            <span class="status-badge" 
-                                  th:classappend="${t.status == 'issued' ? 'status-issued' : (t.status == 'returned' ? 'status-returned' : 'status-overdue')}"
-                                  th:text="${t.status}">status</span>
-                        </td>
-                        <td th:text="${t.message}">Notes</td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(transactions)}">
-                        <td colspan="9" style="text-align: center; padding: 30px; color: #666;">
-                            &#x1F4ED; No transactions found matching your criteria
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="table-card">
+            <h3 class="section-title">Transactions Report</h3>
+            <div th:if="${#lists.isEmpty(transactions)}" class="empty-state">
+                No report data found for the current filters.
+            </div>
+            <div th:unless="${#lists.isEmpty(transactions)}" class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Type</th>
+                            <th>User</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tx : ${transactions}">
+                            <td th:text="${tx.assetName}"></td>
+                            <td th:text="${tx.assetType}"></td>
+                            <td th:text="${tx.userName}"></td>
+                            <td th:text="${tx.department}"></td>
+                            <td>
+                                <span class="badge" th:classappend="' status-' + ${tx.status}" th:text="${tx.status}"></span>
+                            </td>
+                            <td th:text="${tx.issueDate != null ? #temporals.format(tx.issueDate, 'yyyy-MM-dd HH:mm') : ''}"></td>
+                            <td th:text="${tx.returnDate != null ? #temporals.format(tx.returnDate, 'yyyy-MM-dd HH:mm') : 'Pending'}"></td>
+                            <td th:text="${tx.message}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
